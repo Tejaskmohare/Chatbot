@@ -64,6 +64,7 @@ def check_virustotal(url):
 def index():
     return render_template("demo.html")
 
+
 @app.route("/chat", methods=["POST"])
 def chat():
     user_input = request.form.get("message").strip()  # Get user input
