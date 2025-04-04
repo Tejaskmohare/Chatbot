@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberSec Chatbot</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron&display=swap');
+
+        body {
+            font-family: 'Orbitron', sans-serif;
+            background-color: #0a0a0a;
+            color: #33ff33;
+            text-align: center;
+        }
+
+        .chat-container {
+            width: 90%;
+            max-width: 500px;
+            margin: 30px auto;
+            background: #111;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 15px #00ff00;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .chat-box {
+            height: 400px;
+            overflow-y: auto;
+            border: 2px solid #33ff33;
+            padding: 10px;
+            background: #000;
+            border-radius: 5px;
+            box-shadow: inset 0 0 10px #00ff00;
+        }
+
+        .message {
+            padding: 10px;
+            margin: 10px;
+            border-radius: 5px;
+            max-width: 75%;
+            word-wrap: break-word;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .user-message {
+            background: #00ff00;
+            color: #000;
+            text-align: right;
+            align-self: flex-end;
+            box-shadow: 0 0 8px #00ff00;
+        }
+
+        .bot-message {
+            background: #222;
+            color: #33ff33;
+            text-align: left;
+            align-self: flex-start;
+            box-shadow: 0 0 8px #33ff33;
+        }
+
+        .input-box {
+            width: 100%;
+            margin-top: 10px;
+            display: flex;
+            background: #222;
+            border-radius: 5px;
+            box-shadow: 0 0 10px #00ff00;
+        }
+
+        input {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            outline: none;
+            font-size: 16px;
+            background: #000;
+            color: #33ff33;
+        }
+
+        button {
+            padding: 10px;
+            background: #00ff00;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 5px;
+            margin-left: 5px;
+            box-shadow: 0 0 8px #00ff00;
+            transition: all 0.3s;
+        }
+
+        button:hover {
+            transform: scale(1.1);
+        }
+
+        /* Typing Indicator */
+        .typing-indicator {
+            display: none;
+            text-align: left;
+            margin: 10px;
+            color: #33ff33;
+            font-style: italic;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1> Phishing Detector 💀</h1>
+    <div class="chat-container">
+        <div class="chat-box" id="chat-box">
+            <div class="message bot-message">🤖 Hello! Send me a URL, and I'll check its safety.</div>
+        </div>
+        <div class="typing-indicator" id="typing-indicator">🤖 Bot is typing...</div>
+        <div class="input-box">
+            <input type="text" id="user-input" placeholder="Enter a URL here...">
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+
+    <script>
+        function sendMessage() {
+            let userInput = document.getElementById("user-input").value;
+            if (userInput.trim() === "") return;
+            
+            let chatBox = document.getElementById("chat-box");
+    
+            // Append User Message
+            let userMessage = document.createElement("div");
+            userMessage.className = "message user-message";
+            userMessage.innerText = userInput;
+            chatBox.appendChild(userMessage);
+    
+            // Scroll to latest message
+            chatBox.scrollTop = chatBox.scrollHeight;
+    
+            // Show typing indicator
+            let typingIndicator = document.getElementById("typing-indicator");
+            typingIndicator.style.display = "block";
+    
+            // Send request to Flask backend
+            fetch("/chat", {
+                method: "POST",
+                body: new URLSearchParams({ message: userInput }),
+                headers: { "Content-Type": "application/x-www-form-urlencoded" }
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Hide typing indicator
+                typingIndicator.style.display = "none";
+    
+                // Append Bot Response
+                let botMessage = document.createElement("div");
+                botMessage.className = "message bot-message";
+                botMessage.innerText = data.response;
+                chatBox.appendChild(botMessage);
+    
+                // Scroll down
+                chatBox.scrollTop = chatBox.scrollHeight;
+            });
+    
+            // Clear input field
+            document.getElementById("user-input").value = "";
+        }
+    
+        // Listen for "Enter" key
+        document.getElementById("user-input").addEventListener("keypress", function(event) {
+            if (event.key === "Enter") {
+                event.preventDefault(); // Prevent default form submission
+                sendMessage();
+            }
+        });
+    </script>
+    
+</body>
+</html>
