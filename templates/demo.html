@@ -7,24 +7,23 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
 
-
         video {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover; /* Ensures the video covers the whole area */
-      z-index: -1; /* Places the video behind other content */
-    }
-    /* Content styling */
-    .content {
-      position: relative;
-      z-index: 1;
-      color: white;
-      text-align: center;
-      padding: 50px;
-    }
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+
+        .content {
+            position: relative;
+            z-index: 1;
+            color: white;
+            text-align: center;
+            padding: 50px;
+        }
 
         body {
             font-family: 'Poppins', sans-serif;
@@ -37,58 +36,52 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            /* background-image: url("download.jpg"); */
         }
 
         .chat-container {
-    width: 90%;
-    max-width: 600px;
-    background: rgba(255, 255, 255, 0.074); /* Transparent white */
-    border-radius: 20px;
-    padding: 25px;
-    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2); /* Softer shadow */
-    backdrop-filter: blur(20px); /* Blur effect */
-    position: relative;
-}
-
-
-    .chat-box {
-     width: 90%;
-     /* height: 300px; */
-     height: 400px;
-     overflow-y: auto;
-    max-width: 600px;
-    background: rgba(255, 255, 255, 0.464); /* Transparent white */
-    border-radius: 20px;
-    padding: 25px;
-    box-shadow: 5px 5px 15px rgba(107, 169, 180, 0.527); /* Softer shadow */
-    backdrop-filter: blur(10px); /* Blur effect */
-    position: relative;
-
+            width: 90%;
+            max-width: 600px;
+            background: rgba(255, 255, 255, 0.074);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(20px);
+            position: relative;
         }
 
-        h1{
-            color: rgb(212, 233, 240);
-        }
-        .message {
+        .chat-box {
+            width: 100%;
+            height: 400px;
+            overflow-y: auto;
+            background: rgba(255, 255, 255, 0.464);
+            border-radius: 20px;
             padding: 15px;
+            box-shadow: 5px 5px 15px rgba(107, 169, 180, 0.527);
+            backdrop-filter: blur(10px);
+            position: relative;
+        }
+
+        h1 {
+            color: rgb(212, 233, 240);
+            font-size: 1.5em;
+        }
+
+        .message {
+            padding: 10px;
             margin: 10px;
             border-radius: 15px;
             max-width: 75%;
             word-wrap: break-word;
-            font-size: 16px;
-            background: rgba(255, 255, 255, 0.749); /* Transparent white */
+            font-size: 14px;
+            background: rgba(255, 255, 255, 0.749);
             animation: fadeIn 0.5s ease-in-out;
-            /* backdrop-filter: blur(10px); Blur effect */
         }
 
         .user-message {
             background: linear-gradient(145deg, #436b95, #3a73af);
-            color: #000000;
+            color: #ffffff;
             text-align: right;
             align-self: flex-end;
-            box-shadow: 5px 5px 10px #bdbdbd, 5px 5px 10px #8be1fbcc;
-            background: rgba(255, 255, 255, 0.441); /* Transparent white */
         }
 
         .bot-message {
@@ -96,9 +89,6 @@
             color: #000000;
             text-align: left;
             align-self: flex-start;
-            box-shadow: 5px 5px 10px #bdbdbd, 5px 5px 10px #8be1fbcc;
-            backdrop-filter: blur(10px); /* Blur effect */
-            background: rgba(172, 221, 241, 0.221); /* Transparent white */
         }
 
         .input-box {
@@ -107,31 +97,27 @@
             display: flex;
             background: #ffffff37;
             border-radius: 15px;
-            border: none;
-            box-shadow: 3px 3px 5px #bebebe5e;
             padding: 10px;
         }
 
         input {
             flex: 1;
-            padding: 12px;
+            padding: 10px;
             border: none;
             border-radius: 15px;
             outline: none;
-            font-size: 16px;
+            font-size: 14px;
             background: transparent;
         }
 
         button {
-            padding: 12px 20px;
+            padding: 10px 15px;
             background: linear-gradient(145deg, #6ebbe8, #90c2f8);
             border: none;
             cursor: pointer;
-            font-size: 16px;
+            font-size: 14px;
             color: white;
             border-radius: 15px;
-            box-shadow:  0px 0px 0px #85c1eeaf;
-            transition: all 0.3s;
         }
 
         button:hover {
@@ -146,6 +132,28 @@
             font-style: italic;
         }
 
+        @media (max-width: 768px) {
+            body {
+                flex-direction: column;
+                height: auto;
+                padding: 20px;
+            }
+            .chat-container {
+                width: 100%;
+                padding: 15px;
+            }
+            .chat-box {
+                height: 300px;
+                padding: 10px;
+            }
+            h1 {
+                font-size: 1.2em;
+            }
+            input, button {
+                font-size: 12px;
+            }
+        }
+
         @keyframes fadeIn {
             from {
                 opacity: 0;
@@ -156,35 +164,12 @@
                 transform: translateY(0);
             }
         }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-      
     </style>
 </head>
-<body >
-
-
-
+<body>
     <video autoplay muted loop>
         <source src="/static/1.mp4" type="video/mp4">
     </video>
-    
-
-<!-- <img src=".templates/download.jpg" alt="img" srcset=""> -->
-
-
-   
     <div class="chat-container">
         <h1>Phishing Detector 🔍</h1>
         <div class="chat-box" id="chat-box">
@@ -196,24 +181,18 @@
             <button onclick="sendMessage()">Send</button>
         </div>
     </div>
-
     <script>
         function sendMessage() {
             let userInput = document.getElementById("user-input").value;
             if (userInput.trim() === "") return;
-            
             let chatBox = document.getElementById("chat-box");
-    
             let userMessage = document.createElement("div");
             userMessage.className = "message user-message";
             userMessage.innerText = userInput;
             chatBox.appendChild(userMessage);
-    
             chatBox.scrollTop = chatBox.scrollHeight;
-    
             let typingIndicator = document.getElementById("typing-indicator");
             typingIndicator.style.display = "block";
-    
             fetch("/chat", {
                 method: "POST",
                 body: new URLSearchParams({ message: userInput }),
@@ -222,28 +201,14 @@
             .then(response => response.json())
             .then(data => {
                 typingIndicator.style.display = "none";
-    
                 let botMessage = document.createElement("div");
                 botMessage.className = "message bot-message";
                 botMessage.innerText = data.response;
                 chatBox.appendChild(botMessage);
-    
                 chatBox.scrollTop = chatBox.scrollHeight;
             });
-    
             document.getElementById("user-input").value = "";
         }
-    
-        document.getElementById("user-input").addEventListener("keypress", function(event) {
-            if (event.key === "Enter") {
-                event.preventDefault();
-                sendMessage();
-            }
-        });
     </script>
-
-    
 </body>
 </html>
-
-
